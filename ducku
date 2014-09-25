@@ -29,6 +29,8 @@ detect_lang() {
     echo "python"
   elif [ -f $1/app.rb ]; then
     echo "ruby"
+  elif [ -f $1/app.go ]; then
+    echo "go"
   else
     echo ""
   fi
@@ -48,6 +50,9 @@ assert_lang() {
     ;;
     ruby)
       echo "--->" $(tce-load -wi ruby-2.1)
+    ;;
+    go)
+      echo "--->" $(tce-load -wi go)
     ;;
   esac
 }
@@ -94,6 +99,7 @@ case "$1" in
       echo "---> - Node.js needs an 'app.js'"
       echo "---> - Python needs an 'app.py'"
       echo "---> - Ruby needs an 'app.rb'"
+      echo "---> - Go needs an 'app.go'"
       echo "---> Or, add 'execute.sh' to run something custom."
     fi
     ;;
@@ -112,6 +118,11 @@ case "$1" in
   execute-ruby)
     [[ `pidof ruby` ]] && sudo killall ruby
     sudo nohup ruby $DUCKU_ROOT/run/app.rb >$DUCKU_ROOT/run.log 2>&1 </dev/null &
+    ;;
+
+  execute-go)
+    [[ `pidof go` ]] && sudo killall go
+    sudo nohup go run $DUCKU_ROOT/run/app.go >$DUCKU_ROOT/run.log 2>&1 </dev/null &
     ;;
 
   execute-custom)

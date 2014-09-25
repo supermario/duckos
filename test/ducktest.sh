@@ -7,7 +7,7 @@ HOST=$(duck find-quiet)
 # Remove the host key given host keys change each build
 ssh-keygen -R $HOST
 
-read -r -p "Choose lang (nodejs/python/ruby): " lang
+read -r -p "Choose lang (nodejs/python/ruby/go): " lang
 
 # Package our test app
 tar czvf app.tar.gz -C app-$lang/ .
